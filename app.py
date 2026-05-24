@@ -4,7 +4,8 @@ from flask import Flask
 
 app = Flask(__name__)
 # Połączenie z Redisem – nazwa hosta 'redis' odnosi się do nazwy usługi w Docker Compose
-cache = redis.Redis(host='redis', port=6379)
+redis_url = os.environ.get('REDIS_URL', 'redis://redis:6379')
+cache = redis.from_url(redis_url)
 
 def get_hit_count():
     retries = 5
